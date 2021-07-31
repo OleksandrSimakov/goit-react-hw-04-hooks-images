@@ -33,57 +33,26 @@ export default function App() {
   const isFirstRender = useRef(true)
 
   useEffect(() => {
-    if (isFirstRender.current) {
+    if (isFirstRender.current || searchQuery === '') {
       isFirstRender.current = false
       return
     }
 
-    try {
-      setQueryStatus('pending')
+    setQueryStatus('pending')
 
-      const images = fetchImages(searchQuery, currentPage)
-        .then((result) => result)
-        .catch((error) => console.log(error))
-
-      setQueryStatus('resolved')
-
-      setImages((prevState) => [...prevState, ...images])
-
-      scrollTo()
-    } catch (error) {
-      setQueryStatus('rejected')
-    }
+    fetchImages(searchQuery, currentPage)
+      .then((result) => {
+        setImages((prevState) => [...prevState, ...result])
+        scrollTo()
+        setQueryStatus('resolved')
+      })
+      .catch((error) => setQueryStatus('rejected'))
   }, [currentPage, searchQuery])
-
-  //   async function componentDidUpdate(_, prevState) {
-  //     const { searchQuery, currentPage } = this.state
-
-  // const shouldFetch =
-  //   (prevState.searchQuery !== searchQuery && searchQuery !== '') ||
-  //   prevState.currentPage !== currentPage
-
-  //     if (shouldFetch) {
-  //       try {
-  //         this.setState({ queryStatus: 'pending' })
-
-  //         const images = await fetchImages(searchQuery, currentPage)
-
-  //         this.setState((prevState) => ({
-  //           queryStatus: 'resolved',
-  //           images: [...prevState.images, ...images],
-  //         }))
-
-  //         scrollTo()
-  //       } catch (error) {
-  //         this.setState({ reqStatus: 'rejected' })
-  //       }
-  //     }
-  //   }
 
   const handleMoreBtnClick = (e) => {
     e.preventDefault()
 
-    setCurrentPage((prevState) => prevState.currentPage + 1)
+    setCurrentPage((prevState) => prevState + 1)
   }
 
   const handleImgClick = (largeImageURL, tags) => {
