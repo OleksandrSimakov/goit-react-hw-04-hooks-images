@@ -1,5 +1,5 @@
 import '../App/App.css'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Searchbar from '../Searchbar/Searchbar'
 import { fetchImages } from '../../services/fetchImages'
 import ImageGallery from '../ImageGallery/ImageGallery'
@@ -17,7 +17,7 @@ export default function App() {
     },
   }
 
-  const [searchQuery, setSearchQuery] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
   const [queryStatus, setQueryStatus] = useState('idle')
   const [images, setImages] = useState([])
   const [currentPage, setCurrentPage] = useState(null)
@@ -30,11 +30,8 @@ export default function App() {
     setCurrentPage(1)
   }
 
-  const isFirstRender = useRef(true)
-
   useEffect(() => {
-    if (isFirstRender.current || searchQuery === '') {
-      isFirstRender.current = false
+    if (searchQuery === '') {
       return
     }
 
