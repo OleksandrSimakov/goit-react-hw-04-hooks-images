@@ -81,9 +81,7 @@ export default function App() {
         </ImageGallery>
       )}
 
-      {queryStatus === 'resolved' && (
-        <Button handleMoreBtnClick={handleMoreBtnClick} />
-      )}
+      {images.length > 0 && <Button handleMoreBtnClick={handleMoreBtnClick} />}
 
       {queryStatus === 'pending' && <Spinner />}
 
