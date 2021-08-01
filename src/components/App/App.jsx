@@ -68,16 +68,18 @@ export default function App() {
     <>
       <Searchbar onSubmit={handleSubmit} />
 
-      <ImageGallery>
-        {images.map(({ id, webformatURL, tags, largeImageURL }) => (
-          <ImageGalleryItem
-            key={id}
-            webformatURL={webformatURL}
-            tags={tags}
-            onImgClick={() => handleImgClick(largeImageURL, tags)}
-          />
-        ))}
-      </ImageGallery>
+      {images.length > 0 && (
+        <ImageGallery>
+          {images.map(({ id, webformatURL, tags, largeImageURL }) => (
+            <ImageGalleryItem
+              key={id}
+              webformatURL={webformatURL}
+              tags={tags}
+              onImgClick={() => handleImgClick(largeImageURL, tags)}
+            />
+          ))}
+        </ImageGallery>
+      )}
 
       {queryStatus === 'resolved' && (
         <Button handleMoreBtnClick={handleMoreBtnClick} />
