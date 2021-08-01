@@ -36,6 +36,9 @@ export default function App() {
     }
 
     setQueryStatus('pending')
+    if (currentPage === 1) {
+      setImages([])
+    }
 
     fetchImages(searchQuery, currentPage)
       .then((result) => {
